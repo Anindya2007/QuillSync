@@ -13,12 +13,48 @@ datasource db {
   url      = env("MONGODB_URI")
 }
 
+enum WorkspaceRole {
+  OWNER
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
 model User {
   id          String   @id @default(cuid()) @map("_id")
   email       String   @unique
   name        String?
   avatarUrl   String?
   password    String
+  ownedWorkspaces  Workspace[]       @relation("WorkspaceOwner")
+  memberships      WorkspaceMember[]  
+
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model Workspace {
+  id          String   @id @default(cuid()) @map("_id")
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  ownerId     String
+  owner       User     @relation("WorkspaceOwner", fields: [ownerId], references: [id])
+  members     WorkspaceMember[]
+}
+
+model WorkspaceMember {
+  id          String        @id @default(cuid()) @map("_id")
+  role        WorkspaceRole @default(VIEWER)
+  joinedAt    DateTime      @default(now())
+
+  userId      String
+  user        User          @relation(fields: [userId], references: [id])
+
+  workspaceId String
+  workspace   Workspace     @relation(fields: [workspaceId], references: [id])
+
+  @@unique([userId, workspaceId])
 }
