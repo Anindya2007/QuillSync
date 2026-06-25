@@ -13,12 +13,86 @@ datasource db {
   url      = env("MONGODB_URI")
 }
 
+enum WorkspaceRole {
+  OWNER
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+enum DocumentStatus {
+  DRAFT
+  REVIEW
+  PUBLISHED
+  ARCHIVED
+}
+
 model User {
   id          String   @id @default(cuid()) @map("_id")
   email       String   @unique
   name        String?
   avatarUrl   String?
   password    String
+  ownedWorkspaces  Workspace[]       @relation("WorkspaceOwner")
+  memberships      WorkspaceMember[]  
+  documents  Document[]
+
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  deletedAt   DateTime?
+  isDeleted   Boolean   @default(false)
+}
+
+model Workspace {
+  id          String   @id @default(cuid()) @map("_id")
+  name        String
+  description String?
+
+  ownerId     String
+  owner       User     @relation("WorkspaceOwner", fields: [ownerId], references: [id])
+  members     WorkspaceMember[]
+  documents  Document[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  deletedAt   DateTime?
+  isDeleted   Boolean   @default(false)
+}
+
+model WorkspaceMember {
+  id          String        @id @default(cuid()) @map("_id")
+  role        WorkspaceRole @default(VIEWER)
+  joinedAt    DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  deletedAt   DateTime?
+  isDeleted   Boolean   @default(false)
+
+  userId      String
+  user        User          @relation(fields: [userId], references: [id])
+
+  workspaceId String
+  workspace   Workspace     @relation(fields: [workspaceId], references: [id])
+
+  @@unique([userId, workspaceId])
+}
+
+model Document {
+  id          String         @id @default(cuid()) @map("_id")
+  title       String         @default("Untitled")
+  content     Json?          // Stores rich text as JSON (e.g., TipTap/ProseMirror JSON)
+  status      DocumentStatus @default(DRAFT)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  deletedAt   DateTime?
+  isDeleted   Boolean   @default(false)
+
+  authorId    String
+  author      User           @relation(fields: [authorId], references: [id])
+
+  workspaceId String
+  workspace   Workspace      @relation(fields: [workspaceId], references: [id])
+
+  parentId    String?
+  parent      Document?      @relation("DocumentHierarchy", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  children    Document[]     @relation("DocumentHierarchy")
 }
