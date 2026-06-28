@@ -8,6 +8,14 @@ export default function Signup(){
     const [confirmPassword, setConfirmPassword] = useState('');
     const [passLen, setPassLen] = useState(false);
     const [digit, setDigit] = useState(false);
+    const [error,setError]=useState('Error!!')
+
+    // This function will be used for showing loading page and other error on authentication after backend is ready
+    function handleSubmit(e){
+        e.preventDefault();
+    }
+
+    // This useEffect is here to check the password strength
 
     useEffect(()=>{
 
@@ -49,18 +57,24 @@ export default function Signup(){
 
         <label htmlFor='password' className='label-class'>Password:</label>
         <input type='password' id='password' name='password' className='input-class' placeholder='Password' required onChange={e=>setPassword(e.target.value)}/>
-        
+
+        {/* This div is here to show the current strength of password */}
 
         <div className='flex justify-between'>
             <p className={`${passLen ? 'text-green-500' : 'text-gray-500' } flex gap-0.5 justify-center align-bottom`}> <CircleCheckBig size={18}/> Atleast 8 character long</p>
             <p className={`${digit ? 'text-green-600' : 'text-gray-500' } flex gap-0.5`}> <CircleCheckBig size={18} /> Atleast 1 digit</p>
         </div>
 
+
         <label htmlFor='confirm-password' className='label-class'>Confirm Password:</label>
         <input type='password' id='confirm-password' className='input-class' placeholder='Confirm Password' required onChange={e=>setConfirmPassword(e.target.value)}/>
 
+        {/*This is here to tell wether the password in both field is same or not?*/}
+
         {password!==confirmPassword? <p className='text-red-500 mb-0 mt-1'>Passwords do not match</p>:''}
 
+        {/*The user will only able to click the submit button when he/she fills all fields properly */}
+        
         <button type='submit' disabled={password!==confirmPassword || password.length===0} className={`${password===confirmPassword && password!==''? 'bg-indigo-600 opacity-100' : 'bg-gray-400 opacity-60'} text-white rounded-4xl text-2xl px-6 py-2 cursor-pointer mt-3 mb-0 ${password===confirmPassword && password!=''? 'hover:bg-indigo-700 transition duration-300 ease-in-out transform hover:scale-95':''}`}>
             Create Account</button>
 
