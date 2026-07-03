@@ -3,14 +3,14 @@ import { useState } from 'react';
 import '../../styles/Signup.css';
 import { UserPlus } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
-import { Link ,useNavigate} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import AuthLayout from '../layout.jsx';
 
 
 function LoginForm() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [loading, setLoading]=useState(false);
+    const [, setEmail] = useState('');
+    const [, setPassword] = useState('');
+    const [loading] = useState(false);
 
     // ==================== Below is the authentication part , comment out them when backend is ready ======================
 
