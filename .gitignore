@@ -67,3 +67,6 @@ Icon
 .idea/
 *.iml
 *.iws
+
+# Docker
+docker-compose.yml

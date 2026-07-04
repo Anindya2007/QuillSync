@@ -33,6 +33,7 @@ model User {
   name        String?
   avatarUrl   String?
   password    String
+  refreshToken String?
   ownedWorkspaces  Workspace[]       @relation("WorkspaceOwner")
   memberships      WorkspaceMember[]  
   documents  Document[]
