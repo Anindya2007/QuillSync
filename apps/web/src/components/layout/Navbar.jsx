@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom';
 export default function Navbar() {
   return (
     <nav className="w-full bg-[#D1D0FA]">
@@ -9,9 +10,11 @@ export default function Navbar() {
 
         <div className="flex items-center gap-4">
 
-          <button className="border border-indigo-400 text-indigo-500 px-6 py-3 rounded-xl hover:bg-indigo-500 hover:text-white transition duration-300">
-            Sign In
-          </button>
+          <Link to="/signin">
+            <button className="border border-indigo-400 text-indigo-500 px-6 py-3 rounded-xl hover:bg-indigo-500 hover:text-white transition duration-300">
+              Sign In
+            </button>
+          </Link>
 
           <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl shadow-lg transition duration-300">
             Get Started

@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import '../../styles/Signup.css';
+import '../../../styles/Signup.css';
 import { UserPlus ,CircleCheckBig } from "lucide-react"; 
 import { FcGoogle } from "react-icons/fc";
 import {Link,useNavigate} from 'react-router-dom';

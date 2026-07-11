@@ -1,6 +1,6 @@
 // import {signIn} from 'next-auth/react';
 import { useState } from 'react';
-import '../../styles/Signup.css';
+import '../../../styles/Signup.css';
 import { UserPlus } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import { Link ,useNavigate} from 'react-router-dom';
@@ -67,7 +67,7 @@ function LoginForm() {
                 <button type='submit' className={`bg-indigo-600 text-white rounded-4xl text-2xl px-6 py-2 cursor-pointer mt-4 mb-1 hover:duration-300 transition ease-in-out transform hover:scale-95`}>
                     {loading? 'Sign In .....': 'Sign in'}</button>
 
-                <hr></hr>
+                <hr></hr>q
 
             </form>
 

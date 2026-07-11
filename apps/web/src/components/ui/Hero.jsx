@@ -1,3 +1,5 @@
+import {Link} from 'react-router-dom';
+
 export default function Hero() {
   return (
     <section className="min-h-[calc(100vh-80px)] flex flex-col items-center justify-center text-center px-6 ">
@@ -20,9 +22,9 @@ export default function Hero() {
           Get Started
         </button>
 
-        <button className="border border-indigo-500 text-indigo-500 hover:bg-indigo-600 hover:text-white px-8 py-3 rounded-xl font-semibold transition duration-300">
+        <Link to="/signin" className="border border-indigo-500 text-indigo-500 hover:bg-indigo-600 hover:text-white px-8 py-3 rounded-xl font-semibold transition duration-300">
           Sign In
-        </button>
+        </Link>
       </div>
 
     </section>
